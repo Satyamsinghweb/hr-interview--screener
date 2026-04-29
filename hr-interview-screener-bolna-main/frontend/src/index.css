@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base HTML block must have a background to prevent white overscroll bouncing on mobile devices */
+html {
+  background-color: #f8fafc; /* Fallback for light theme */
+  height: 100%;
+  width: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden !important; /* CRITICAL absolute lock against global scrolling */
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure React root expands correctly and cleanly clamps width */
+#root {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------------- GLOBAL THEMES FIXED BACKGROUND FIX ---------------- */
+
+/* Light Theme: Mandala Aesthetic */
+body.light-theme-active {
+  background-color: transparent; /* Let the pseudo-element handle the background color fully */
+  color: #1f2937;
+}
+
+/* Dark Theme: Deep Space Aesthetic */
+body.dark-theme-active {
+  background-color: #0b0c16;
+  color: #f1f5f9;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Higher than -10 to avoid getting trapped behind other elements */
+  background-color: #f8fafc; /* Move solid color here */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.5s ease, background 0.5s ease;
+  pointer-events: none;
+}
+
+body.light-theme-active::before {
+  background-image: 
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJz48ZGVmcz48ZyBpZD0nbSc+PHBhdGggZD0nTTAgLTIwIEMgMTUgLTQwLCAzMCAtNzAsIDAgLTk1IEMgLTMwIC03MCwgLTE1IC00MCwgMCAtMjAnIGZpbGw9J3JnYmEoOTksMTAyLDI0MSwwLjA1KScgc3Ryb2tlPScjNjM2NmYxJyBzdHJva2Utd2lkdGg9JzEnLz48cGF0aCBkPSJNMCAtdzUgQyAxMCAtNDAsIDE1IC02MCwgMCAtODUgQyAtMTUgLTYwLCAtMTAgLTQwLCAwIC0yNScgZmlsbD0nbm9uZScgc3Ryb2tlPScjNjM2NmYxJyBzdHJva2Utd2lkdGg9JzAuNScvPjxwYXRoIGQ9J00wIC0zMCBRIDMwIC0zMCAzNSAtNTAgUSAxNSAtNTAgMCAtNDAnIGZpbGw9J25vbmUnIHN0cm9rZT0nIzYzNjZmMScgc3Ryb2tlLXdpZHRoPScwLjc1Jy8+PHBhdGggZD0nTTAgLTMwIFEgLTMwIC0zMCAtMzUgLTUwIFEgLTE1IC01MCAwIC00MCcgZmlsbD0nbm9uZScgc3Ryb2tlPScjNjM2NmYxJyBzdHJva2Utd2lkdGg9JzAuNzUnLz48Y2lyY2xlIGN4PScwJyBjeT0nLTg1JyByPScyJyBmaWxsPScjNjM2NmYxJy8+PGNpcmNsZSBjeD0nMCcgY3k9Jy03NScgcj0nMS41JyBmaWxsPScjNjM2NmYxJy8+PGNpcmNsZSBjeD0nMCcgY3k9Jy02NScgcj0nMScgZmlsbD0nIzYzNjZmMScvPjwvZz48L2RlZnM+PGcgdHJhbnNmb3JtPSd0cmFuc2xhdGUoMTAwIDEwMCknIG9wYWNpdHk9JzAuNSc+PHVzZSBocmVmPScjbScvPjx1c2UgaHJlZj0nI20nIHRyYW5zZm9ybT0ncm90YXRlKDMwKScvPjx1c2UgaHJlZj0nI20nIHRyYW5zZm9ybT0ncm90YXRlKDYwKScvPjx1c2UgaHJlZj0nI20nIHRyYW5zZm9ybT0ncm90YXRlKDkwKScvPjx1c2UgaHJlZj0nI20nIHRyYW5zZm9ybT0ncm90YXRlKDEyMCknLz48dXNlIGhyZWY9JyNtJyB0cmFuc2Zvcm09J3JvdGF0ZSgyNDApJy8+PHVzZSBocmVmPScjbScgdHJhbnNmb3JtPSdyb3RhdGUoMTgwKScvPjx1c2UgaHJlZj0nI20nIHRyYW5zZm9ybT0ncm90YXRlKDIxMCknLz48dXNlIGhyZWY9JyNtJyB0cmFuc2Zvcm09J3JvdGF0ZSgyNzApJy8+PHVzZSBocmVmPScjbScgdHJhbnNmb3JtPSdyb3RhdGUoMzAwKScvPjx1c2UgaHJlZj0nI20nIHRyYW5zZm9ybT0ncm90YXRlKDMzMCknLz48Y2lyY2xlIHI9JzE4JyBmaWxsPSdyZ2JhKDk5LDEwMiwyNDEsMC4xKScgc3Ryb2tlPScjNjM2NmYxJyBzdHJva2Utd2lkdGg9JzEuNScvPjxjaXJjbGUgcj0nMTQnIGZpbGw9J25vbmUnIHN0cm9rZT0nIzYzNjZmMScgc3Ryb2tlLWRhc2hhcnJheT0nMyAzJyBzdHJva2Utd2lkdGg9JzEnLz48Y2lyY2xlIHI9JzYnIGZpbGw9JyM2MzY2ZjEnLz48Y2lyY2xlIHI9JzI1JyBmaWxsPSdub25lJyBzdHJva2U9JyM2MzY2ZjEnIHN0cm9rZS13aWR0aD0nMC41Jy8+PGNpcmNsZSByPSc5NScgZmlsbD0nbm9uZScgc3Ryb2tlPScjNjM2NmYxJyBzdHJva2Utd2lkdGg9JzAuNScgc3Ryb2tlLWRhc2hhcnJheT0nNCA4Jy8+PC9nPjwvc3ZnPg=="),
+    radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.4) 0px, transparent 70%),
+    radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.4) 0px, transparent 70%);
+  background-size: 300px 300px, cover, cover;
+  background-position: center, 0 0, 100% 100%;
+}
+
+body.dark-theme-active::before {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+}
+
+/* ---------------- UTILITIES ---------------- */
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-card-dark {
+  background: rgba(17, 19, 36, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ---------------- REACT PHONE NUMBER INPUT OVERRIDES ---------------- */
+
+.PhoneInput {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.PhoneInputInput {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+.PhoneInputCountry {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  padding-right: 0.5rem;
+  border-right: 1px solid rgba(156, 163, 175, 0.3); /* gray-400 */
+}
+.PhoneInputCountryIcon {
+  width: 1.5rem;
+  height: 1rem;
+  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.1);
+}
+.PhoneInputCountryIcon--square {
+  width: 1rem;
+}
+.PhoneInputCountryIconImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.PhoneInputCountrySelectArrow {
+  display: block;
+  content: '';
+  width: 0.35rem;
+  height: 0.35rem;
+  margin-left: 0.45rem;
+  border-style: solid;
+  border-color: currentColor;
+  border-width: 0 0.15rem 0.15rem 0;
+  transform: rotate(45deg);
+  opacity: 0.6;
+}
+
+/* ---------------- SCROLLBARS ---------------- */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
+body.dark-theme-active ::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+}
+body.dark-theme-active ::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.6);
+}
+body.light-theme-active ::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.25);
+}
+body.light-theme-active ::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
